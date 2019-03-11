@@ -17,3 +17,4 @@ Implement player actions in various locations
 Implement story using the characters mentioned above
 Implement boss class, and multiple characters as secret bosses depending on choices made by player?
 Fix binding
+Finalize map

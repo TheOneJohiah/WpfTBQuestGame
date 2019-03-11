@@ -39,5 +39,10 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         {
 
         }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

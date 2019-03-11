@@ -36,7 +36,6 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontFamily" Value="Lucida Console"/>
         </Style>
-
         <Style x:Key="TBPlaceholder" TargetType="TextBlock">
             <Setter Property="FontSize" Value="25"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -71,6 +70,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="670"/>
         </Grid.ColumnDefinitions>
+        <Button
+            Content="Quit"
+            Style="{StaticResource ButtonMap}" Grid.Column="1" Margin="615,10,10,45"
+            Click="Quit_Click">
+            
+        </Button>
         <Border
             Grid.Column="1"
             Grid.Row="1"
