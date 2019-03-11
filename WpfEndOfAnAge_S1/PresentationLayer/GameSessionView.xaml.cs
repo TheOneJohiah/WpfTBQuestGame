@@ -25,15 +25,15 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         {
             _gameSessionViewModel = gameSessionViewModel;
 
-            InitializeWindowTheme();
+            //InitializeWindowTheme();
 
             InitializeComponent();
         }
 
-        private void InitializeWindowTheme()
+        /*private void InitializeWindowTheme()
         {
             this.Title = "Laughing Leaf Productions";
-        }
+        }*/
 
         private void AlphaButton_Click(object sender, RoutedEventArgs e)
         {

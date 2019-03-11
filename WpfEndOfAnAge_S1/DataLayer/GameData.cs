@@ -26,8 +26,10 @@ namespace WpfEndOfAnAge_S1.DataLayer
         {
             return new List<string>()
             {
-                "\tYou have been hired by the Norlon Corporation to participate in its latest endeavor, the Aion Project. Your mission is to  test the limits of the new Aion Engine and report back to the Norlon Corporation.",
-                "\tYou will begin by choosing a new location and using Aion Engine to travel to that point in the Galaxy.\n\tThe Aion Engine, design by Dr. Tormeld, is limited to four slipstreams, denoted by the first four Greek letters, from any given locations."
+                "\tYou were raised in a rural village deep in the mountains, undiscovered and unattached to any major power. One day, you discovered a cave near your village",
+                "\tUpon entering, you discovered an ancient research lab. The power was dead, and any defensive systems offline. Within the central room of this lab you discovered Ultima.",
+                "\tUltima is a state of the art battlesuit, as best you can tell from recovered datachips. Unfortunately, all but the core and helmet were damaged beyong repair.",
+                "\tUltima has the potential to change the world, if you use it right. It's up to you to become famous, or fade into obscurity."
             };
         }
     }

@@ -12,34 +12,43 @@ namespace WpfEndOfAnAge_S1.BusinessLayer
     public class GameBusiness
     {
         GameSessionViewModel _gameSessionViewModel;
-        //bool _newPlayer = false; // assume player is new for this sprint
+        bool _newPlayer = true; // assume player is new for this sprint
         Player _player = new Player();
+        PlayerSetupView _playerSetupView = null;
+        List<string> _messages;
 
         public GameBusiness()
         {
-            //SetupPlayer();
+            SetupPlayer();
+            InitializeDataSet();
             InstantiateAndShowView();
+        }
+
+        private void InitializeDataSet()
+        {
+            _player = GameData.PlayerData();
+            _messages = GameData.InitialMessages();
         }
 
         /// <summary>
         /// setup new or existing player
         /// </summary>
-        /*private void SetupPlayer()
+        private void SetupPlayer()
         {
             if (_newPlayer)
             {
+                _playerSetupView = new PlayerSetupView(_player);
+                _playerSetupView.ShowDialog();
                 //
                 // setup up game based player properties
                 //
                 _player.ExperiencePoints = 0;
-                _player.Health = 100;
-                _player.Lives = 3;
             }
             else
             {
                 _player = GameData.PlayerData();
             }
-        }*/
+        }
 
         /// <summary>
         /// create view model with data set
@@ -51,7 +60,7 @@ namespace WpfEndOfAnAge_S1.BusinessLayer
             //
             _gameSessionViewModel = new GameSessionViewModel(
                 _player,
-                GameData.InitialMessages()
+                _messages
                 );
             GameSessionView gameSessionView = new GameSessionView(_gameSessionViewModel);
             
@@ -61,10 +70,7 @@ namespace WpfEndOfAnAge_S1.BusinessLayer
             //
             // dialog window is initially hidden to mitigate issue with
             // main window closing after dialog window closes
-            //
-            // commented out because the player setup window is disabled
-            //
-            //_playerSetupView.Close();
+            _playerSetupView.Close();
         }
 
     }
