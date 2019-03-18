@@ -12,7 +12,7 @@ namespace WpfEndOfAnAge_S1.BusinessLayer
     public class GameBusiness
     {
         GameSessionViewModel _gameSessionViewModel;
-        bool _newPlayer = true; // assume player is new for this sprint
+        bool _newPlayer = false; // assume player is new for this sprint
         Player _player = new Player();
         PlayerSetupView _playerSetupView = null;
         List<string> _messages;
