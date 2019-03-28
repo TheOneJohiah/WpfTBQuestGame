@@ -30,19 +30,19 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             InitializeComponent();
         }
 
-        /*private void InitializeWindowTheme()
-        {
-            this.Title = "Laughing Leaf Productions";
-        }*/
-
-        private void AlphaButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void TBOutput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TBOutput.ScrollToEnd();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

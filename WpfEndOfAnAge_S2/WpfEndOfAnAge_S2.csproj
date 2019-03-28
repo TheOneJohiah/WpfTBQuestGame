@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="BusinessLayer\GameBusiness.cs" />
     <Compile Include="DataLayer\GameData.cs" />
+    <Compile Include="Utilities\StringHelpers.cs" />
     <Page Include="PresentationLayer\GameSessionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,6 +80,7 @@
       <DependentUpon>GameSessionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="PresentationLayer\GameSessionViewModel.cs" />
+    <Compile Include="ObservableObject.cs" />
     <Compile Include="PresentationLayer\PlayerSetupView.xaml.cs">
       <DependentUpon>PlayerSetupView.xaml</DependentUpon>
     </Compile>

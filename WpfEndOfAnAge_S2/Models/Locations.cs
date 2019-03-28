@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfEndOfAnAge_S1.Models
 {
-    class Locations
+    public class Location
     {
         public enum LocationOwnerName
         {
@@ -62,5 +62,9 @@ namespace WpfEndOfAnAge_S1.Models
             set { _id = value; }
         }
 
+        public Location()
+        {
+
+        }
     }
 }

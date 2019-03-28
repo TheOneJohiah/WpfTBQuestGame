@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
+using System.Collections.ObjectModel;
+using WpfEndOfAnAge_S1;
 using WpfEndOfAnAge_S1.Models;
+using WpfEndOfAnAge_S1.DataLayer;
 
 namespace WpfEndOfAnAge_S1.PresentationLayer
 {
-    public class GameSessionViewModel
+    public class GameSessionViewModel : ObservableObject
     {
         #region ENUMS
 
@@ -17,9 +21,16 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
 
         #region FIELDS
 
-        private Player _player;
-        private List<string> _messages;
         private DateTime _gameStartTime;
+        private string _gameTimeDisplay;
+        private TimeSpan _gameTime;
+
+        private Player _player;
+
+        private Map _gameMap;
+        private Location _currentLocation;
+        private ObservableCollection<Location> _accessibleLocations;
+        private string _currentLocationName;
 
         #endregion
 
@@ -33,7 +44,55 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
 
         public string MessageDisplay
         {
-            get { return FormatMessagesForViewer(); }
+            get { return _currentLocation.Description; }
+        }
+        public Map GameMap
+        {
+            get { return _gameMap; }
+            set { _gameMap = value; }
+        }
+        public Location CurrentLocation
+        {
+            get { return _currentLocation; }
+            set
+            {
+                _currentLocation = value;
+                OnPropertyChanged(nameof(CurrentLocation));
+            }
+        }
+
+        public ObservableCollection<Location> AccessibleLocations
+        {
+            get
+            {
+                return _accessibleLocations;
+            }
+            set
+            {
+                _accessibleLocations = value;
+                OnPropertyChanged(nameof(AccessibleLocations));
+            }
+        }
+
+        public string CurrentLocationName
+        {
+            get { return _currentLocationName; }
+            set
+            {
+                _currentLocationName = value;
+                OnPlayerMove();
+                OnPropertyChanged("CurrentLocation");
+            }
+        }
+
+        public string MissionTimeDisplay
+        {
+            get { return _gameTimeDisplay; }
+            set
+            {
+                _gameTimeDisplay = value;
+                OnPropertyChanged(nameof(MissionTimeDisplay));
+            }
         }
 
         #endregion
@@ -44,13 +103,17 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         {
 
         }
-        
+
         public GameSessionViewModel(
             Player player,
-            List<string> initialMessages)
+            Map gameMap)
         {
             _player = player;
-            _messages = initialMessages;
+            _gameMap = gameMap;
+
+            _currentLocation = _gameMap.CurrentLocation;
+            _accessibleLocations = new ObservableCollection<Location>();
+
             InitializeView();
         }
 
@@ -64,25 +127,73 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         private void InitializeView()
         {
             _gameStartTime = DateTime.Now;
+            GameTimer();
+
+            UpdateAccessibleLocations();
         }
 
         /// <summary>
-        /// generates a string of mission messages with time stamp with most current first
+        /// player move event handler
         /// </summary>
-        /// <returns>string of formated mission messages</returns>
-        private string FormatMessagesForViewer()
+        private void OnPlayerMove()
         {
-            List<string> lifoMessages = new List<string>();
-
-            for (int index = 0; index < _messages.Count; index++)
+            //
+            // set new current location
+            //
+            foreach (Location location in AccessibleLocations)
             {
-                lifoMessages.Add($" <T:{GameTime().ToString(@"hh\:mm\:ss")}> " + _messages[index]);
+                if (location.Name == _currentLocationName)
+                {
+                    _currentLocation = location;
+                }
+            }
+            //_currentLocation = AccessibleLocations.FirstOrDefault(l => l.Name == _currentLocationName);
+            
+            //
+            // display a new message if available
+            //
+            OnPropertyChanged(nameof(MessageDisplay));
+
+
+            //
+            // update the list of locations
+            //
+            UpdateAccessibleLocations();
+        }
+
+        /// <summary>
+        /// update the accessible locations for the list box
+        /// </summary>
+        private void UpdateAccessibleLocations()
+        {
+            //
+            // reset accessible locations list
+            //
+            _accessibleLocations.Clear();
+
+            //
+            // add all accessible locations to list
+            //
+            foreach (Location location in _gameMap.Locations)
+            {
+                if (location.Accessible == true)
+                {
+                    _accessibleLocations.Add(location);
+                }
             }
 
-            lifoMessages.Reverse();
+            //
+            // remove current location
+            //
+            _accessibleLocations.Remove(_accessibleLocations.FirstOrDefault(l => l == _currentLocation));
 
-            return string.Join("\n\n", lifoMessages);
+            //
+            // notify list box in view to update
+            //
+            OnPropertyChanged(nameof(AccessibleLocations));
         }
+
+        #region GAME TIMER METHODS
 
         /// <summary>
         /// running time of game
@@ -92,6 +203,31 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         {
             return DateTime.Now - _gameStartTime;
         }
+
+        /// <summary>
+        /// game time event, publishes every 1 second
+        /// </summary>
+        public void GameTimer()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Tick += OnGameTimerTick;
+            timer.Start();
+        }
+
+        /// <summary>
+        /// game timer event handler
+        /// 1) update mission time on window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void OnGameTimerTick(object sender, EventArgs e)
+        {
+            _gameTime = DateTime.Now - _gameStartTime;
+            MissionTimeDisplay = "Mission Time " + _gameTime.ToString(@"hh\:mm\:ss");
+        }
+
+        #endregion
 
         #endregion
 

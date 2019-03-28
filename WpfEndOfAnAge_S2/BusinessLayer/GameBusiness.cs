@@ -12,10 +12,10 @@ namespace WpfEndOfAnAge_S1.BusinessLayer
     public class GameBusiness
     {
         GameSessionViewModel _gameSessionViewModel;
-        bool _newPlayer = false; // assume player is new for this sprint
+        bool _newPlayer = false;
         Player _player = new Player();
         PlayerSetupView _playerSetupView = null;
-        List<string> _messages;
+        Map _gameMap;
 
         public GameBusiness()
         {
@@ -27,7 +27,7 @@ namespace WpfEndOfAnAge_S1.BusinessLayer
         private void InitializeDataSet()
         {
             _player = GameData.PlayerData();
-            _messages = GameData.InitialMessages();
+            _gameMap = GameData.GameMap();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace WpfEndOfAnAge_S1.BusinessLayer
             //
             _gameSessionViewModel = new GameSessionViewModel(
                 _player,
-                _messages
+                _gameMap
                 );
             
             GameSessionView gameSessionView = new GameSessionView(_gameSessionViewModel);

@@ -7,43 +7,55 @@ using System.Threading.Tasks;
 
 namespace WpfEndOfAnAge_S1.Models
 {
-    class Map
+    public class Map
     {
-        private Locations _locations;
-        private Locations _currentLocation;
-        private ObservableCollection<Locations> _accessibleLocations;
+        #region FIELDS
+        private List<Location> _locations;
+        private Location _currentLocation;
+        private ObservableCollection<Location> _accessibleLocations;
+        #endregion
 
-        public ObservableCollection<Locations> AccessibleLocations
-        {
-            get
-            {
-                ObservableCollection<Locations> _accessibleLocations = new ObservableCollection<Locations>();
-                foreach (var location in _locations)
-                {
-                    if (location.Accessible == true)
-                    {
-                        _accessibleLocations.Add(location);
-                    }
-                    return _accessibleLocations;
-                }
-            }
-        }
-
-        public Locations CurrentLocation
-        {
-            get { return _currentLocation; }
-            set { _currentLocation = value; }
-        }
-
-        public Locations Location
+        #region PROPERTIES
+        public List<Location> Locations
         {
             get { return _locations; }
             set { _locations = value; }
         }
 
-        public void Move(Locations location)
+        public Location CurrentLocation
+        {
+            get { return _currentLocation; }
+            set { _currentLocation = value; }
+        }
+
+        public ObservableCollection<Location> AccessibleLocations
+        {
+            get { return _accessibleLocations; }
+            set { _accessibleLocations = value; }
+        }
+        #endregion
+
+        #region CONSTRUCTORS
+
+        public Map()
+        {
+            _locations = new List<Location>();
+        }
+
+        #endregion
+
+        #region METHODS
+
+        public void Move(Location location)
         {
             _currentLocation = location;
         }
+
+        public bool CanMove(Location location)
+        {
+            return location.Accessible;
+        }
+
+        #endregion
     }
 }

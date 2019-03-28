@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfEndOfAnAge_S1.Models
 {
-    public abstract class Character
+    public abstract class Character : ObservableObject
     {
         #region ENUMERABLES
 
