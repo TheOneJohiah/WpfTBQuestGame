@@ -41,7 +41,6 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             get { return _player; }
             set { _player = value; }
         }
-
         public string MessageDisplay
         {
             get { return _currentLocation.Description; }
@@ -59,6 +58,19 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
                 _currentLocation = value;
                 OnPropertyChanged(nameof(CurrentLocation));
             }
+        }
+
+        internal void MoveToAncientLab()
+        {
+            _currentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 1);
+        }
+        internal void MoveToHometown()
+        {
+            _currentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 2);
+        }
+        internal void MoveToSkeetala()
+        {
+            _currentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 4);
         }
 
         public ObservableCollection<Location> AccessibleLocations
@@ -95,6 +107,12 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             }
         }
 
+        public bool IsFortressVisible { get; set; }
+        public bool IsSkeetalaVisible { get; set; }
+        public bool IsSocietyVisible { get; set; }
+        public bool IsNifarraVisible { get; set; }
+        public bool IsKefanaVisible { get; set; }
+        public bool IsBayVisible { get; set; }
         #endregion
 
         #region CONSTRUCTORS
@@ -129,7 +147,44 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             _gameStartTime = DateTime.Now;
             GameTimer();
 
+            SetLocationVisibility();
             UpdateAccessibleLocations();
+        }
+
+        private void SetLocationVisibility()
+        {
+            foreach (Location location in _gameMap.Locations)
+            {
+                if (location.Accessible == false)
+                {
+                    switch (location.Id)
+                    {
+                        case 3:
+                            IsSocietyVisible = false;
+                            break;
+                        case 4:
+                            IsSkeetalaVisible = false;
+                            break;
+                        case 5:
+                            IsKefanaVisible = false;
+                            break;
+                        case 6:
+                            IsBayVisible = false;
+                            break;
+                        case 7:
+                            IsNifarraVisible = false;
+                            break;
+                        case 8:
+                            IsFortressVisible = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+            }
+
+
         }
 
         /// <summary>
@@ -148,7 +203,7 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
                 }
             }
             //_currentLocation = AccessibleLocations.FirstOrDefault(l => l.Name == _currentLocationName);
-            
+
             //
             // display a new message if available
             //
@@ -166,10 +221,6 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         /// </summary>
         private void UpdateAccessibleLocations()
         {
-            //
-            // reset accessible locations list
-            //
-            _accessibleLocations.Clear();
 
             //
             // add all accessible locations to list

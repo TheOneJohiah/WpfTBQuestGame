@@ -10,6 +10,7 @@
         WindowState="Maximized"
         Background="AntiqueWhite">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
         <Style x:Key="BorderStyle" TargetType="Border">
             <Setter Property="Background" Value="AliceBlue"/>
             <Setter Property="Margin" Value="3,3,3,3"/>
@@ -91,44 +92,54 @@
             Grid.Row="1"
             Style="{StaticResource BorderStyle}">
             <Image
-                Source="C:\Users\thore\Desktop\Programming\CIT 195\Week 10\WpfEndOfAnAge_S1\WpfEndOfAnAge_S1\Assets\TB Quest Game Map.png"/>
+                Source="C:\Users\thore\Desktop\Programming\CIT 195\Week 11\WpfEndOfAnAge_S1\WpfEndOfAnAge_S1\Assets\TB Quest Game Map.png"/>
         </Border>
         <Grid
             Grid.Column="1"
             Grid.Row="1">
             <Button
+                x:Name="SkeetalaButton"
                 Content="Skeetala"
                 Style="{StaticResource ButtonMap}"
-                Margin="430,335,195,320"/>
+                Margin="430,335,195,320"
+                Visibility="{Binding IsSkeetalaVisible, Converter={StaticResource BooleanToVisibility}}"
+                Click="SkeetalaButton_Click"/>
             <Button
                 Content="The Great Bay"
                 Style="{StaticResource ButtonMap}"
-                Margin="205,522,395,133" Width="70"/>
+                Margin="205,522,395,133" Width="70"
+                Visibility="{Binding IsBayVisible, Converter={StaticResource BooleanToVisibility}}"/>
             <Button
                 Content="The Fortress"
                 Style="{StaticResource ButtonMap}"
-                Margin="93,100,517,554" Width="60" Height="16"/>
+                Margin="93,100,517,554" Width="60" Height="16"
+                Visibility="{Binding IsFortressVisible, Converter={StaticResource BooleanToVisibility}}"/>
             <Button
                 Content="Nifarra"
                 Style="{StaticResource ButtonMap}"
-                Margin="130,234,496,422" Height="14" Width="44"/>
+                Margin="130,234,496,422" Height="14" Width="44"
+                Visibility="{Binding IsNifarraVisible, Converter={StaticResource BooleanToVisibility}}"/>
             <Button
                 Content="Kefana Bazaar"
                 Style="{StaticResource ButtonMap}"
-                Margin="430,488,170,167" Width="70"/>
+                Margin="430,488,170,167" Width="70"
+                Visibility="{Binding IsKefanaVisible, Converter={StaticResource BooleanToVisibility}}"/>
             <Button
                 Content="Society Airship"
                 Style="{StaticResource ButtonMap}"
-                Margin="274,264,316,390" Width="80" Height="16"/>
+                Margin="274,264,316,390" Width="80" Height="16"
+                Visibility="{Binding IsSocietyVisible, Converter={StaticResource BooleanToVisibility}}"/>
             <Button
+                x:Name="HometownButton"
                 Content="Hometown"
                 Style="{StaticResource ButtonMap}"
-                Margin="512,162,113,492" Height="16"/>
+                Margin="514,154,112,500" Height="16" Width="44"
+                Click="HometownButton_Click"/>
             <Button
                 Content="Ancient Lab"
                 Style="{StaticResource ButtonMap}"
                 Margin="448,127,152,527" Width="60" Height="16"
-                Click="Button_Ancient_Lab"/>
+                Click="AncientButton_Click"/>
         </Grid>
         <Label
             Content="Placeholder Game Name"

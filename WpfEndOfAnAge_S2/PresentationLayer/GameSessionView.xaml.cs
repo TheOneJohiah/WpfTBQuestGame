@@ -40,9 +40,19 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             TBOutput.ScrollToEnd();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AncientButton_Click(object sender, RoutedEventArgs e)
         {
+            _gameSessionViewModel.MoveToAncientLab();
+        }
 
+        private void SkeetalaButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.MoveToSkeetala();
+        }
+
+        private void HometownButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.MoveToHometown();
         }
     }
 }
