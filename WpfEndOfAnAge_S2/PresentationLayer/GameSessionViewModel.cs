@@ -62,15 +62,35 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
 
         internal void MoveToAncientLab()
         {
-            _currentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 1);
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 1);
         }
         internal void MoveToHometown()
         {
-            _currentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 2);
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 2);
+        }
+        internal void MoveToSOFP()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 3);
         }
         internal void MoveToSkeetala()
         {
-            _currentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 4);
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 4);
+        }
+        internal void MoveToKefana()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 5);
+        }
+        internal void MoveToBay()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 6);
+        }
+        internal void MoveToNifarra()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 7);
+        }
+        internal void MoveToFortress()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 8);
         }
 
         public ObservableCollection<Location> AccessibleLocations

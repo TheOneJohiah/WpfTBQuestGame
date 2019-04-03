@@ -105,30 +105,40 @@
                 Visibility="{Binding IsSkeetalaVisible, Converter={StaticResource BooleanToVisibility}}"
                 Click="SkeetalaButton_Click"/>
             <Button
+                x:Name="BayButton"
                 Content="The Great Bay"
                 Style="{StaticResource ButtonMap}"
                 Margin="205,522,395,133" Width="70"
-                Visibility="{Binding IsBayVisible, Converter={StaticResource BooleanToVisibility}}"/>
+                Visibility="{Binding IsBayVisible, Converter={StaticResource BooleanToVisibility}}"
+                Click="BayButton_Click"/>
             <Button
+                x:Name="FortButton"
                 Content="The Fortress"
                 Style="{StaticResource ButtonMap}"
                 Margin="93,100,517,554" Width="60" Height="16"
-                Visibility="{Binding IsFortressVisible, Converter={StaticResource BooleanToVisibility}}"/>
+                Visibility="{Binding IsFortressVisible, Converter={StaticResource BooleanToVisibility}}"
+                Click="FortButton_Click"/>
             <Button
+                x:Name="NifarraButton"
                 Content="Nifarra"
                 Style="{StaticResource ButtonMap}"
                 Margin="130,234,496,422" Height="14" Width="44"
-                Visibility="{Binding IsNifarraVisible, Converter={StaticResource BooleanToVisibility}}"/>
+                Visibility="{Binding IsNifarraVisible, Converter={StaticResource BooleanToVisibility}}"
+                Click="NifarraButton_Click"/>
             <Button
+                x:Name="KefanaButton"
                 Content="Kefana Bazaar"
                 Style="{StaticResource ButtonMap}"
                 Margin="430,488,170,167" Width="70"
-                Visibility="{Binding IsKefanaVisible, Converter={StaticResource BooleanToVisibility}}"/>
+                Visibility="{Binding IsKefanaVisible, Converter={StaticResource BooleanToVisibility}}"
+                Click="KefanaButton_Click"/>
             <Button
+                x:Name="AirshipButton"
                 Content="Society Airship"
                 Style="{StaticResource ButtonMap}"
                 Margin="274,264,316,390" Width="80" Height="16"
-                Visibility="{Binding IsSocietyVisible, Converter={StaticResource BooleanToVisibility}}"/>
+                Visibility="{Binding IsSocietyVisible, Converter={StaticResource BooleanToVisibility}}"
+                Click="AirshipButton_Click"/>
             <Button
                 x:Name="HometownButton"
                 Content="Hometown"
@@ -136,6 +146,7 @@
                 Margin="514,154,112,500" Height="16" Width="44"
                 Click="HometownButton_Click"/>
             <Button
+                x:Name="LabButton"
                 Content="Ancient Lab"
                 Style="{StaticResource ButtonMap}"
                 Margin="448,127,152,527" Width="60" Height="16"

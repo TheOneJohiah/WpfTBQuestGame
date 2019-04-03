@@ -45,14 +45,39 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             _gameSessionViewModel.MoveToAncientLab();
         }
 
+        private void HometownButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.MoveToHometown();
+        }
+
         private void SkeetalaButton_Click(object sender, RoutedEventArgs e)
         {
             _gameSessionViewModel.MoveToSkeetala();
         }
 
-        private void HometownButton_Click(object sender, RoutedEventArgs e)
+        private void BayButton_Click(object sender, RoutedEventArgs e)
         {
-            _gameSessionViewModel.MoveToHometown();
+            _gameSessionViewModel.MoveToBay();
+        }
+
+        private void FortButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.MoveToFortress();
+        }
+
+        private void NifarraButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.MoveToNifarra();
+        }
+
+        private void KefanaButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.MoveToKefana();
+        }
+
+        private void AirshipButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.MoveToSOFP();
         }
     }
 }
