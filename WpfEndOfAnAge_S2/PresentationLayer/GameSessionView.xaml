@@ -92,7 +92,7 @@
             Grid.Row="1"
             Style="{StaticResource BorderStyle}">
             <Image
-                Source="C:\Users\thore\Desktop\Programming\CIT 195\Week 11\WpfEndOfAnAge_S1\WpfEndOfAnAge_S1\Assets\TB Quest Game Map.png"/>
+                Source="C:\Users\thore\Desktop\Programming\CIT 195\Week 12\WpfEndOfAnAge_S1\WpfEndOfAnAge_S1\Assets\TB Quest Game Map.png"/>
         </Border>
         <Grid
             Grid.Column="1"

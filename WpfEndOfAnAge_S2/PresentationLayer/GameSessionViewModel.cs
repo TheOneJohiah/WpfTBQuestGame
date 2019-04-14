@@ -60,39 +60,6 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             }
         }
 
-        internal void MoveToAncientLab()
-        {
-            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 1);
-        }
-        internal void MoveToHometown()
-        {
-            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 2);
-        }
-        internal void MoveToSOFP()
-        {
-            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 3);
-        }
-        internal void MoveToSkeetala()
-        {
-            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 4);
-        }
-        internal void MoveToKefana()
-        {
-            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 5);
-        }
-        internal void MoveToBay()
-        {
-            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 6);
-        }
-        internal void MoveToNifarra()
-        {
-            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 7);
-        }
-        internal void MoveToFortress()
-        {
-            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 8);
-        }
-
         public ObservableCollection<Location> AccessibleLocations
         {
             get
@@ -103,17 +70,6 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             {
                 _accessibleLocations = value;
                 OnPropertyChanged(nameof(AccessibleLocations));
-            }
-        }
-
-        public string CurrentLocationName
-        {
-            get { return _currentLocationName; }
-            set
-            {
-                _currentLocationName = value;
-                OnPlayerMove();
-                OnPropertyChanged("CurrentLocation");
             }
         }
 
@@ -169,6 +125,49 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
 
             SetLocationVisibility();
             UpdateAccessibleLocations();
+            MoveToAncientLab();
+        }
+
+
+        internal void MoveToAncientLab()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 1);
+            OnPlayerMove();
+        }
+        internal void MoveToHometown()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 2);
+            OnPlayerMove();
+        }
+        internal void MoveToSOFP()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 3);
+            OnPlayerMove();
+        }
+        internal void MoveToSkeetala()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 4);
+            OnPlayerMove();
+        }
+        internal void MoveToKefana()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 5);
+            OnPlayerMove();
+        }
+        internal void MoveToBay()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 6);
+            OnPlayerMove();
+        }
+        internal void MoveToNifarra()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 7);
+            OnPlayerMove();
+        }
+        internal void MoveToFortress()
+        {
+            CurrentLocation = _accessibleLocations.FirstOrDefault(l => l.Id == 8);
+            OnPlayerMove();
         }
 
         private void SetLocationVisibility()
@@ -201,10 +200,7 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
                             break;
                     }
                 }
-
             }
-
-
         }
 
         /// <summary>
@@ -213,22 +209,20 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         private void OnPlayerMove()
         {
             //
-            // set new current location
+            // update player stats when in new location
             //
-            foreach (Location location in AccessibleLocations)
+            if (!_player.HasVisited(_currentLocation))
             {
-                if (location.Name == _currentLocationName)
-                {
-                    _currentLocation = location;
-                }
+                //
+                // add location to list of visited locations
+                //
+                _player.LocationsVisited.Add(_currentLocation);
+
+                // 
+                // update experience points
+                //
+                _player.ExperiencePoints += _currentLocation.ModifyXP;
             }
-            //_currentLocation = AccessibleLocations.FirstOrDefault(l => l.Name == _currentLocationName);
-
-            //
-            // display a new message if available
-            //
-            OnPropertyChanged(nameof(MessageDisplay));
-
 
             //
             // update the list of locations
@@ -252,11 +246,6 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
                     _accessibleLocations.Add(location);
                 }
             }
-
-            //
-            // remove current location
-            //
-            _accessibleLocations.Remove(_accessibleLocations.FirstOrDefault(l => l == _currentLocation));
 
             //
             // notify list box in view to update

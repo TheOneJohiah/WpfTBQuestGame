@@ -24,11 +24,12 @@ namespace WpfEndOfAnAge_S1.Models
         private bool _accessible;
         private int _requiredStanding;
         private LocationOwnerName _locationOwner;
-
-        public LocationOwnerName LocationOwner
+        private int _modifyXP;
+        
+        public bool Accessible
         {
-            get { return _locationOwner; }
-            set { _locationOwner = value; }
+            get { return _accessible; }
+            set { _accessible = value; }
         }
 
         public int RequiredStanding
@@ -37,11 +38,10 @@ namespace WpfEndOfAnAge_S1.Models
             set { _requiredStanding = value; }
         }
 
-
-        public bool Accessible
+        public LocationOwnerName LocationOwner
         {
-            get { return _accessible; }
-            set { _accessible = value; }
+            get { return _locationOwner; }
+            set { _locationOwner = value; }
         }
 
         public string Description
@@ -62,9 +62,17 @@ namespace WpfEndOfAnAge_S1.Models
             set { _id = value; }
         }
 
+        public int ModifyXP
+        {
+            get { return _modifyXP; }
+            set { _modifyXP = value; }
+        }
+
+        #region CONSTRUCTORS
         public Location()
         {
 
         }
+        #endregion
     }
 }

@@ -15,6 +15,7 @@ namespace WpfEndOfAnAge_S1.Models
 
         #region FIELDS
         private int _experiencePoints;
+        private List<Location> _locationsVisited;
         //TODO: Figure out individual limb stats, and how to change them when upgrading/in combat
         #endregion
 
@@ -22,15 +23,26 @@ namespace WpfEndOfAnAge_S1.Models
         public int ExperiencePoints
         {
             get { return _experiencePoints; }
-            set { _experiencePoints = value; }
+            set
+            {
+                _experiencePoints = value;
+                OnPropertyChanged(nameof(ExperiencePoints));
+            }
         }
 
+        public List<Location> LocationsVisited
+        {
+            get { return _locationsVisited; }
+            set { _locationsVisited = value; }
+        }
         #endregion
 
         #region CONSTRUCTORS
-
-
-
+        public Player()
+        {
+            _locationsVisited = new List<Location>();
+        }
+        
         #endregion
 
         #region METHODS
@@ -60,6 +72,11 @@ namespace WpfEndOfAnAge_S1.Models
         {
             throw new NotImplementedException();
             //TODO: Make method change player's faction alignment based on output from a popup window for this purpose
+        }
+
+        public bool HasVisited(Location location)
+        {
+            return _locationsVisited.Contains(location);
         }
 
         #endregion
