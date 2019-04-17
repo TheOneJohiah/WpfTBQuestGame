@@ -7,12 +7,10 @@ Implement player standings affecting many aspects of the game
 Implement experience point upgrades
 Implement random encounters
 Implement combat, HP loss, repair, energy, etc.
-Implement unlocking new map locations
 Implement changing alignment
 Implement Read/write for saving and loading?
 Implement characters in various locations
 Implement looting from sites
-Implement travelling across the map
 Implement player actions in various locations
 Implement story using the characters mentioned above
 Implement boss class, and multiple characters as secret bosses depending on choices made by player?
