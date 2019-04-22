@@ -28,7 +28,7 @@ namespace WpfEndOfAnAge_S1.Models
                 _experiencePoints = value;
                 OnPropertyChanged(nameof(ExperiencePoints));
             }
-        }+
+        }
 
         public List<Location> LocationsVisited
         {
