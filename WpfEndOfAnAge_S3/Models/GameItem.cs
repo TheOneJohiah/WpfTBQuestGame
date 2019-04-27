@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfEndOfAnAge_S3.Models
 {
-    class GameItem
+    public class GameItem
     {
         #region PROPERTIES
         public int Id { get; set; }

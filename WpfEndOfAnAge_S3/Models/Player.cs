@@ -3,20 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Windows.Data;
+using WpfEndOfAnAge_S3.Models;
 
 namespace WpfEndOfAnAge_S1.Models
 {
     public class Player : Character
     {
         #region ENUMS
-
+        public enum AttachmentLocationName
+        {
+            HEAD,
+            LARM,
+            RARM,
+            LLEG,
+            RLEG
+        }
 
         #endregion
 
+        #region DICTS
+        Dictionary<>
+        #endregion
+
         #region FIELDS
+        private int _cohesion;
+        private int _wealth;
         private int _experiencePoints;
         private List<Location> _locationsVisited;
-        //TODO: Figure out individual limb stats, and how to change them when upgrading/in combat
+        private ObservableCollection<GameItem> _inventory;
+        private ObservableCollection<GameItem> _injectors;
+        private ObservableCollection<GameItem> _attachments;
+        private ObservableCollection<GameItem> _relic;
         #endregion
 
         #region PROPERTIES
@@ -35,6 +54,38 @@ namespace WpfEndOfAnAge_S1.Models
             get { return _locationsVisited; }
             set { _locationsVisited = value; }
         }
+
+        public int Cohesion
+        {
+            get { return _cohesion; }
+            set { _cohesion = value; }
+        }
+        public int Wealth
+        {
+            get { return _wealth; }
+            set { _wealth = value; }
+        }
+        public ObservableCollection<GameItem> Inventory
+        {
+            get { return _inventory; }
+            set { _inventory = value; }
+        }
+        public ObservableCollection<GameItem> Injectors
+        {
+            get { return _injectors; }
+            set { _injectors = value; }
+        }
+        public ObservableCollection<GameItem> Attachments
+        {
+            get { return _attachments; }
+            set { _attachments = value; }
+        }
+        public ObservableCollection<GameItem> Relic
+        {
+            get { return _relic; }
+            set { _relic = value; }
+        }
+
         #endregion
 
         #region CONSTRUCTORS
