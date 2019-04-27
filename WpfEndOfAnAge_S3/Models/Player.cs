@@ -11,22 +11,6 @@ namespace WpfEndOfAnAge_S1.Models
 {
     public class Player : Character
     {
-        #region ENUMS
-        public enum AttachmentLocationName
-        {
-            HEAD,
-            LARM,
-            RARM,
-            LLEG,
-            RLEG
-        }
-
-        #endregion
-
-        #region DICTS
-        Dictionary<>
-        #endregion
-
         #region FIELDS
         private int _cohesion;
         private int _wealth;
@@ -36,6 +20,7 @@ namespace WpfEndOfAnAge_S1.Models
         private ObservableCollection<GameItem> _injectors;
         private ObservableCollection<GameItem> _attachments;
         private ObservableCollection<GameItem> _relic;
+        private Dictionary<string, Attachments> _equippedAttachments;
         #endregion
 
         #region PROPERTIES
@@ -85,13 +70,18 @@ namespace WpfEndOfAnAge_S1.Models
             get { return _relic; }
             set { _relic = value; }
         }
-
+        public Dictionary<string, Attachments> EquippedAttachments
+        {
+            get { return _equippedAttachments; }
+            set { _equippedAttachments = value; }
+        }
         #endregion
 
         #region CONSTRUCTORS
         public Player()
         {
             _locationsVisited = new List<Location>();
+            _equippedAttachments = new Dictionary<string, Attachments>();
         }
         
         #endregion
