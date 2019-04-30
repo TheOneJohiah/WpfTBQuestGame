@@ -147,6 +147,30 @@ namespace WpfEndOfAnAge_S1.Models
             TotalWealth = _inventory.Sum(i => i.Value) + _wealth;
         }
 
+        /// <summary>
+        /// add selected item to inventory
+        /// </summary>
+        /// <param name="selectedGameItem"></param>
+        public void AddGameItemToInvenory(GameItem selectedGameItem)
+        {
+            if (selectedGameItem != null)
+            {
+                _inventory.Add(selectedGameItem);
+            }
+        }
+
+        /// <summary>
+        /// remove selected item from inventory
+        /// </summary>
+        /// <param name="selectedGameItem"></param>
+        public void RemoveGameItemFromInventory(GameItem selectedGameItem)
+        {
+            if (selectedGameItem != null)
+            {
+                _inventory.Remove(selectedGameItem);
+            }
+        }
+
         #endregion
 
         #region EVENTS

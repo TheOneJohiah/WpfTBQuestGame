@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfEndOfAnAge_S3.Models;
 
 namespace WpfEndOfAnAge_S1.Models
 {
@@ -13,6 +14,7 @@ namespace WpfEndOfAnAge_S1.Models
         private List<Location> _locations;
         private Location _currentLocation;
         private ObservableCollection<Location> _accessibleLocations;
+        private List<GameItem> _standardGameItems;
         #endregion
 
         #region PROPERTIES
@@ -21,17 +23,20 @@ namespace WpfEndOfAnAge_S1.Models
             get { return _locations; }
             set { _locations = value; }
         }
-
         public Location CurrentLocation
         {
             get { return _currentLocation; }
             set { _currentLocation = value; }
         }
-
         public ObservableCollection<Location> AccessibleLocations
         {
             get { return _accessibleLocations; }
             set { _accessibleLocations = value; }
+        }
+        public List<GameItem> StandardGameItems
+        {
+            get { return _standardGameItems; }
+            set { _standardGameItems = value; }
         }
         #endregion
 
