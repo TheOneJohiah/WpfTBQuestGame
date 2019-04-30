@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfEndOfAnAge_S3.Models
 {
-    class Relic : GameItem
+    public class Relic : GameItem
     {
         public enum UseActionType
         {

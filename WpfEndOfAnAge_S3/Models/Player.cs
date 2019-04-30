@@ -13,14 +13,15 @@ namespace WpfEndOfAnAge_S1.Models
     {
         #region FIELDS
         private int _cohesion;
-        private int _wealth;
+        private int _totalWealth;
         private int _experiencePoints;
+        private int _wealth;
         private List<Location> _locationsVisited;
         private ObservableCollection<GameItem> _inventory;
         private ObservableCollection<GameItem> _injectors;
         private ObservableCollection<GameItem> _attachments;
         private ObservableCollection<GameItem> _relic;
-        private Dictionary<string, Attachments> _equippedAttachments;
+        private List<Attachments> _equippedAttachments;
         #endregion
 
         #region PROPERTIES
@@ -33,17 +34,20 @@ namespace WpfEndOfAnAge_S1.Models
                 OnPropertyChanged(nameof(ExperiencePoints));
             }
         }
-
         public List<Location> LocationsVisited
         {
             get { return _locationsVisited; }
             set { _locationsVisited = value; }
         }
-
         public int Cohesion
         {
             get { return _cohesion; }
             set { _cohesion = value; }
+        }
+        public int TotalWealth
+        {
+            get { return _totalWealth; }
+            set { _totalWealth = value; }
         }
         public int Wealth
         {
@@ -70,7 +74,7 @@ namespace WpfEndOfAnAge_S1.Models
             get { return _relic; }
             set { _relic = value; }
         }
-        public Dictionary<string, Attachments> EquippedAttachments
+        public List<Attachments> EquippedAttachments
         {
             get { return _equippedAttachments; }
             set { _equippedAttachments = value; }
@@ -79,9 +83,13 @@ namespace WpfEndOfAnAge_S1.Models
 
         #region CONSTRUCTORS
         public Player()
-        {
+        {   
             _locationsVisited = new List<Location>();
-            _equippedAttachments = new Dictionary<string, Attachments>();
+            _injectors = new ObservableCollection<GameItem>();
+            _attachments = new ObservableCollection<GameItem>();
+            _relic = new ObservableCollection<GameItem>();
+            _equippedAttachments = new List<Attachments>();
+            
         }
         
         #endregion
@@ -118,6 +126,25 @@ namespace WpfEndOfAnAge_S1.Models
         public bool HasVisited(Location location)
         {
             return _locationsVisited.Contains(location);
+        }
+
+        public void UpdateInventoryCategories()
+        {
+            Injectors.Clear();
+            Attachments.Clear();
+            Relic.Clear();
+
+            foreach (var gameItem in _inventory)
+            {
+                if (gameItem is Injectors) Injectors.Add(gameItem);
+                if (gameItem is Attachments) Attachments.Add(gameItem);
+                if (gameItem is Relic) Relic.Add(gameItem);
+            }
+        }
+
+        public void CalculateWealth()
+        {
+            TotalWealth = _inventory.Sum(i => i.Value) + _wealth;
         }
 
         #endregion

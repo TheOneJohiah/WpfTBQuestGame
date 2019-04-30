@@ -30,7 +30,6 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         private Map _gameMap;
         private Location _currentLocation;
         private ObservableCollection<Location> _accessibleLocations;
-        private string _currentLocationName;
 
         #endregion
 

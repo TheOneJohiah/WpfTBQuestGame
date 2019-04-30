@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfEndOfAnAge_S3.Models
 {
-    class Injectors : GameItem
+    public class Injectors : GameItem
     {
         public int HealthChange { get; set; }
         public int EnergyChange { get; set; }
