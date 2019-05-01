@@ -127,12 +127,6 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
 
             InitializeView();
         }
-
-        internal void EquipGameItem()
-        {
-            
-        }
-
         #endregion
 
         #region METHODS
@@ -427,6 +421,22 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             _player.Cohesion += injector.CohesionChange;
             _player.Energy += injector.EnergyChange;
             _player.RemoveGameItemFromInventory(_currentGameItem);
+        }
+
+        internal void EquipGameItem()
+        {
+            Attachment selectedGameItem = _currentGameItem as Attachment;
+            foreach (Attachment item in _player.EquippedAttachments)
+            {
+                if (selectedGameItem.PartLocation == item.PartLocation)
+                {
+                    _player.EquippedAttachments.Remove(item);
+                    _player.EquippedAttachments.Add(selectedGameItem);
+                    _player.RemoveGameItemFromInventory(_currentGameItem);
+                    _player.AddGameItemToInventory(item);
+                }
+
+            }
         }
 
         /// <summary>

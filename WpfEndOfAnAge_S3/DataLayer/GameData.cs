@@ -24,6 +24,15 @@ namespace WpfEndOfAnAge_S1.DataLayer
                 Inventory = new ObservableCollection<GameItem>()
                 {
                     GameItemById(0001)
+                },
+                EquippedAttachments = new List<Attachment>()
+                {
+                    EquippedGearById(1001),
+                    EquippedGearById(1002),
+                    EquippedGearById(1003),
+                    EquippedGearById(1004),
+                    EquippedGearById(1005),
+                    EquippedGearById(1006)
                 }
             };
         }
@@ -31,6 +40,10 @@ namespace WpfEndOfAnAge_S1.DataLayer
         private static GameItem GameItemById(int id)
         {
             return StandardGameItems().FirstOrDefault(i => i.Id == id);
+        }
+        private static Attachment EquippedGearById(int id)
+        {
+            return EquippedBaseGear().FirstOrDefault(i => i.Id == id);
         }
 
         public static Map GameMap()
@@ -145,13 +158,23 @@ namespace WpfEndOfAnAge_S1.DataLayer
 
             return gameMap;
         }
-
+        public static List<Attachment> EquippedBaseGear()
+        {
+            return new List<Attachment>()
+            {
+                new Attachment(1001, "Base Helmet", 1, 2, 10, 0, "Compatible with all powered armor.", 0, Attachment.PartLocationName.HEAD),
+                new Attachment(1002, "Base Chest", 1, 2, 10, 0, "Compatible with all powered armor.", 0, Attachment.PartLocationName.CHEST),
+                new Attachment(1003, "Base Left Sleeve", 1, 2, 10, 0, "Compatible with all powered armor.", 0, Attachment.PartLocationName.LEFTARM),
+                new Attachment(1004, "Base Right Sleeve", 1, 2, 10, 0, "Compatible with all powered armor.", 0, Attachment.PartLocationName.RIGHTARM),
+                new Attachment(1005, "Base Left Leg", 1, 2, 10, 0, "Compatible with all powered armor.", 0, Attachment.PartLocationName.LEFTLEG),
+                new Attachment(1006, "Base Right Leg", 1, 2, 10, 0, "Compatible with all powered armor.", 0, Attachment.PartLocationName.RIGHTLEG),
+            };
+        }
         public static List<GameItem> StandardGameItems()
         {
             return new List<GameItem>()
             {
-                new GameItem(0001, "Your clothes", 1, "Just the clothes you've worn, handspun and rough.", 0),
-                new Attachment(1001, "Ultima", 1000000000, 50, 500, 10, "Ultima is a very powerful artifact, a suit core stronger than any other.", 0, Attachment.PartLocationName.CHEST),
+                new Attachment(1007, "Ultima", 1000000000, 50, 500, 10, "Ultima is a very powerful artifact, a suit core stronger than any other.", 0, Attachment.PartLocationName.CHEST),
                 new Injector(2001, "Nanite injection", 100, 100, 0, "These nanites will patch armor and heal wounds.", 10),
                 new Relic(3001, "The Cube", 1000000001, "No one knows what this does, but it is a central display in the SOFP museum. It's a pitch black cube that absorbs all light that falls upon it.", 70, "Nothing seems to happen.", Relic.UseActionType.OPENLOCATION)
             };
