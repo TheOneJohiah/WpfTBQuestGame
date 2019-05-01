@@ -61,6 +61,19 @@ namespace WpfEndOfAnAge_S1.Models
             return location.Accessible;
         }
 
+        public string OpenLocationsByRelic(int relicId)
+        {
+            string message = "The relic did nothing.";
+            Location mapLocation = new Location();
+
+            if (mapLocation != null && mapLocation.RequiredRelicId == relicId)
+            {
+                mapLocation.Accessible = true;
+                message = $"There is a beep of confirmation. The outer defenses of the {mapLocation.Name} have stood down. All that remains is to fight whatever is inside and plunder the interior.";
+            }
+            return message;
+        }
+
         #endregion
     }
 }

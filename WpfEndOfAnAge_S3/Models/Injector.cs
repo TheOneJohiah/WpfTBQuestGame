@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace WpfEndOfAnAge_S3.Models
 {
-    public class Injectors : GameItem
+    public class Injector : GameItem
     {
-        public int HealthChange { get; set; }
+        public int CohesionChange { get; set; }
         public int EnergyChange { get; set; }
 
-        public Injectors(int id, string name, int value, int healthChange, int energyChange, string description, int experiencePoints)
+        public Injector(int id, string name, int value, int cohesionChange, int energyChange, string description, int experiencePoints)
             : base(id, name, value, description, experiencePoints)
         {
-            HealthChange = healthChange;
+            CohesionChange = cohesionChange;
             EnergyChange = energyChange;
         }
         public override string InformationString()
         {
-            if (HealthChange != 0)
+            if (CohesionChange != 0)
             {
-                return $"{Name}: {Description}\nHealth: {HealthChange}";
+                return $"{Name}: {Description}\nCohesion: {CohesionChange}";
             }
             else if(EnergyChange != 0)
             {

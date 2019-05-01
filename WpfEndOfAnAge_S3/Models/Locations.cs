@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using WpfEndOfAnAge_S3.Models;
 
 namespace WpfEndOfAnAge_S1.Models
 {
-    public class Location
+    public class Location : ObservableObject
     {
+        #region ENUMS
         public enum LocationOwnerName
         {
             Unaligned,
@@ -17,15 +20,22 @@ namespace WpfEndOfAnAge_S1.Models
             Vaitarra,
             TSOFP
         }
+        #endregion
 
+        #region FIELDS
         private int _id;
         private string _name;
         private string _description;
+        private string _visitedDescription;
         private bool _accessible;
         private int _requiredStanding;
+        private int _requiredRelicId;
         private LocationOwnerName _locationOwner;
         private int _modifyXP;
-        
+        private ObservableCollection<GameItem> _gameItems;
+        #endregion
+
+        #region PROPERTIES
         public bool Accessible
         {
             get { return _accessible; }
@@ -36,6 +46,12 @@ namespace WpfEndOfAnAge_S1.Models
         {
             get { return _requiredStanding; }
             set { _requiredStanding = value; }
+        }
+
+        public int RequiredRelicId
+        {
+            get { return _requiredRelicId; }
+            set { _requiredRelicId = value; }
         }
 
         public LocationOwnerName LocationOwner
@@ -67,11 +83,62 @@ namespace WpfEndOfAnAge_S1.Models
             get { return _modifyXP; }
             set { _modifyXP = value; }
         }
+        public ObservableCollection<GameItem> GameItems
+        {
+            get { return _gameItems; }
+            set { _gameItems = value; }
+        }
+
+        public string VisitedDescription
+        {
+            get { return _visitedDescription; }
+            set { _visitedDescription = value; }
+        }
+        #endregion
 
         #region CONSTRUCTORS
         public Location()
         {
+            _gameItems = new ObservableCollection<GameItem>();
+        }
+        #endregion
 
+        #region METHODS
+        public void UpdateLocationGameItems()
+        {
+            ObservableCollection<GameItem> updatedLocationGameItems = new ObservableCollection<GameItem>();
+
+            foreach (GameItem GameItem in _gameItems)
+            {
+                updatedLocationGameItems.Add(GameItem);
+            }
+
+            GameItems.Clear();
+
+            foreach (GameItem gameItem in updatedLocationGameItems)
+            {
+                GameItems.Add(gameItem);
+            }
+        }
+
+        public void AddGameItemToLocation(GameItem selectedGameItem)
+        {
+            if (selectedGameItem != null)
+            {
+                _gameItems.Add(selectedGameItem);
+            }
+
+            UpdateLocationGameItems();
+        }
+
+        public void RemoveGameItemFromLocation(GameItem selectedGameItem)
+        {
+            if (selectedGameItem != null)
+            {
+                _gameItems.Remove(selectedGameItem);
+            }
+
+            UpdateLocationGameItems();
         }
         #endregion
     }

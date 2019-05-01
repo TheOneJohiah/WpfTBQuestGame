@@ -59,9 +59,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Attachments.cs" />
+    <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\GameItem.cs" />
-    <Compile Include="Models\Injectors.cs" />
+    <Compile Include="Models\Injector.cs" />
     <Compile Include="Models\Relic.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="Utilities\StringHelpers.cs" />

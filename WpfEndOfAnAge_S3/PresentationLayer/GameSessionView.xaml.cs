@@ -79,5 +79,37 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         {
             _gameSessionViewModel.MoveToSOFP();
         }
+
+        private void PickUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocationItemsDataGrid.SelectedItem != null)
+            {
+                _gameSessionViewModel.AddItemToInventory();
+            }
+        }
+
+        private void PutDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InventoryDataGrid.SelectedItem != null)
+            {
+                _gameSessionViewModel.RemoveItemFromInventory();
+            }
+        }
+
+        private void UseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InventoryDataGrid.SelectedItem != null)
+            {
+                _gameSessionViewModel.OnUseGameItem();
+            }
+        }
+
+        private void EquipButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InventoryDataGrid.SelectedItem != null)
+            {
+                _gameSessionViewModel.EquipGameItem();
+            }
+        }
     }
 }

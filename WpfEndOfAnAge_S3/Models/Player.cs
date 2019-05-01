@@ -13,6 +13,9 @@ namespace WpfEndOfAnAge_S1.Models
     {
         #region FIELDS
         private int _cohesion;
+        private int _maxCohesion;
+        private int _energy;
+        private int _maxEnergy;
         private int _totalWealth;
         private int _experiencePoints;
         private int _wealth;
@@ -21,7 +24,7 @@ namespace WpfEndOfAnAge_S1.Models
         private ObservableCollection<GameItem> _injectors;
         private ObservableCollection<GameItem> _attachments;
         private ObservableCollection<GameItem> _relic;
-        private List<Attachments> _equippedAttachments;
+        private List<Attachment> _equippedAttachments;
         #endregion
 
         #region PROPERTIES
@@ -42,7 +45,36 @@ namespace WpfEndOfAnAge_S1.Models
         public int Cohesion
         {
             get { return _cohesion; }
-            set { _cohesion = value; }
+            set
+            {
+                _cohesion = value;
+                if (_cohesion > _maxCohesion)
+                {
+                    _cohesion = _maxCohesion;
+                }
+
+                OnPropertyChanged(nameof(Cohesion));
+            }
+            
+        }
+        public int MaxCohesion
+        {
+            get { return _maxCohesion; }
+            set
+            {
+                _maxCohesion = value;
+                _maxCohesion = 0;
+                foreach (Attachment item in _equippedAttachments)
+                {
+                    _maxCohesion = _maxCohesion + item.Cohesion;
+                }
+                OnPropertyChanged(nameof(MaxCohesion));
+            }
+        }
+        public int MaxEnergy
+        {
+            get { return _maxEnergy; }
+            set { _maxEnergy = value; }
         }
         public int TotalWealth
         {
@@ -74,10 +106,15 @@ namespace WpfEndOfAnAge_S1.Models
             get { return _relic; }
             set { _relic = value; }
         }
-        public List<Attachments> EquippedAttachments
+        public List<Attachment> EquippedAttachments
         {
             get { return _equippedAttachments; }
             set { _equippedAttachments = value; }
+        }
+        public int Energy
+        {
+            get { return _energy; }
+            set { _energy = value; }
         }
         #endregion
 
@@ -88,7 +125,7 @@ namespace WpfEndOfAnAge_S1.Models
             _injectors = new ObservableCollection<GameItem>();
             _attachments = new ObservableCollection<GameItem>();
             _relic = new ObservableCollection<GameItem>();
-            _equippedAttachments = new List<Attachments>();
+            _equippedAttachments = new List<Attachment>();
             
         }
         
@@ -136,8 +173,8 @@ namespace WpfEndOfAnAge_S1.Models
 
             foreach (var gameItem in _inventory)
             {
-                if (gameItem is Injectors) Injectors.Add(gameItem);
-                if (gameItem is Attachments) Attachments.Add(gameItem);
+                if (gameItem is Injector) Injectors.Add(gameItem);
+                if (gameItem is Attachment) Attachments.Add(gameItem);
                 if (gameItem is Relic) Relic.Add(gameItem);
             }
         }
@@ -151,7 +188,7 @@ namespace WpfEndOfAnAge_S1.Models
         /// add selected item to inventory
         /// </summary>
         /// <param name="selectedGameItem"></param>
-        public void AddGameItemToInvenory(GameItem selectedGameItem)
+        public void AddGameItemToInventory(GameItem selectedGameItem)
         {
             if (selectedGameItem != null)
             {

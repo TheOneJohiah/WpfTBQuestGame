@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using WpfEndOfAnAge_S1;
 using WpfEndOfAnAge_S1.Models;
 using WpfEndOfAnAge_S1.DataLayer;
+using WpfEndOfAnAge_S3.Models;
+using System.Windows;
 
 namespace WpfEndOfAnAge_S1.PresentationLayer
 {
@@ -31,6 +33,8 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         private Location _currentLocation;
         private ObservableCollection<Location> _accessibleLocations;
 
+        private string _currentLocationInformation;
+        private GameItem _currentGameItem;
         #endregion
 
         #region PROPERTIES
@@ -39,10 +43,6 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         {
             get { return _player; }
             set { _player = value; }
-        }
-        public string MessageDisplay
-        {
-            get { return _currentLocation.Description; }
         }
         public Map GameMap
         {
@@ -55,7 +55,19 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             set
             {
                 _currentLocation = value;
+                _currentLocationInformation = _currentLocation.Description;
                 OnPropertyChanged(nameof(CurrentLocation));
+                OnPropertyChanged(nameof(CurrentLocationInformation));
+            }
+        }
+
+        public string CurrentLocationInformation
+        {
+            get { return _currentLocationInformation; }
+            set
+            {
+                _currentLocationInformation = value;
+                OnPropertyChanged(nameof(CurrentLocationInformation));
             }
         }
 
@@ -80,6 +92,12 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
                 _gameTimeDisplay = value;
                 OnPropertyChanged(nameof(MissionTimeDisplay));
             }
+        }
+
+        public GameItem CurrentGameItem
+        {
+            get { return _currentGameItem; }
+            set { _currentGameItem = value; }
         }
 
         public bool IsFortressVisible { get; set; }
@@ -110,6 +128,11 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             InitializeView();
         }
 
+        internal void EquipGameItem()
+        {
+            
+        }
+
         #endregion
 
         #region METHODS
@@ -125,6 +148,7 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             SetLocationVisibility();
             UpdateAccessibleLocations();
             MoveToAncientLab();
+            _player.UpdateInventoryCategories();
         }
 
 
@@ -199,6 +223,33 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
                             break;
                     }
                 }
+                if (location.Accessible == true)
+                {
+                    switch (location.Id)
+                    {
+                        case 3:
+                            IsSocietyVisible = true;
+                            break;
+                        case 4:
+                            IsSkeetalaVisible = true;
+                            break;
+                        case 5:
+                            IsKefanaVisible = true;
+                            break;
+                        case 6:
+                            IsBayVisible = true;
+                            break;
+                        case 7:
+                            IsNifarraVisible = true;
+                            break;
+                        case 8:
+                            IsFortressVisible = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
             }
         }
 
@@ -207,6 +258,14 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
         /// </summary>
         private void OnPlayerMove()
         {
+            //
+            // update description if location has already been visited
+            //
+            if (_player.LocationsVisited.Contains(_currentLocation))
+            {
+                _currentLocation.Description = _currentLocation.VisitedDescription;
+            }
+
             //
             // update player stats when in new location
             //
@@ -222,11 +281,11 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
                 //
                 _player.ExperiencePoints += _currentLocation.ModifyXP;
             }
-
             //
             // update the list of locations
             //
             UpdateAccessibleLocations();
+            OnPropertyChanged(nameof(CurrentLocation));
         }
 
         /// <summary>
@@ -251,6 +310,165 @@ namespace WpfEndOfAnAge_S1.PresentationLayer
             //
             OnPropertyChanged(nameof(AccessibleLocations));
         }
+
+        /// <summary>
+        /// add a new item to the players inventory
+        /// </summary>
+        /// <param name="selectedItem"></param>
+        public void AddItemToInventory()
+        {
+            //
+            // confirm a game item selected and is in current location
+            // subtract from location and add to inventory
+            //
+            if (_currentGameItem != null && _currentLocation.GameItems.Contains(_currentGameItem))
+            {
+                //
+                // cast selected game item 
+                //
+                GameItem selectedGameItem = _currentGameItem as GameItem;
+
+                _currentLocation.RemoveGameItemFromLocation(selectedGameItem);
+                _player.AddGameItemToInventory(selectedGameItem);
+
+                OnPlayerPickUp(selectedGameItem);
+            }
+        }
+
+        /// <summary>
+        /// remove item from the players inventory
+        /// </summary>
+        /// <param name="selectedItem"></param>
+        public void RemoveItemFromInventory()
+        {
+            //
+            // confirm a game item selected
+            // subtract from inventory and add to location
+            //
+            if (_currentGameItem != null)
+            {
+                //
+                // cast selected game item 
+                //
+                GameItem selectedGameItem = _currentGameItem as GameItem;
+
+                _currentLocation.AddGameItemToLocation(selectedGameItem);
+                _player.RemoveGameItemFromInventory(selectedGameItem);
+
+                OnPlayerPutDown(selectedGameItem);
+            }
+        }
+
+        /// <summary>
+        /// process events when a player picks up a new game item
+        /// </summary>
+        /// <param name="gameItem">new game item</param>
+        private void OnPlayerPickUp(GameItem gameItem)
+        {
+            _player.ExperiencePoints += gameItem.ExperiencePoints;
+            _player.TotalWealth += gameItem.Value;
+        }
+
+        /// <summary>
+        /// process events when a player puts down a new game item
+        /// </summary>
+        /// <param name="gameItem">new game item</param>
+        private void OnPlayerPutDown(GameItem gameItem)
+        {
+            _player.TotalWealth -= gameItem.Value;
+        }
+
+        /// <summary>
+        /// process using an item in the player's inventory
+        /// </summary>
+        public void OnUseGameItem()
+        {
+            switch (_currentGameItem)
+            {
+                case Injector injector:
+                    ProcessInjectorUse(injector);
+                    break;
+                case Relic relic:
+                    ProcessRelicUse(relic);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// process the effects of using the relic
+        /// </summary>
+        /// <param name="potion">potion</param>
+        private void ProcessRelicUse(Relic relic)
+        {
+            string message;
+
+            switch (relic.UseAction)
+            {
+                case Relic.UseActionType.OPENLOCATION:
+                    message = _gameMap.OpenLocationsByRelic(relic.Id);
+                    _currentLocation.Description = relic.UseMessage;
+                    break;
+                case Relic.UseActionType.KILLPLAYER:
+                    OnPlayerDies(relic.UseMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// process the effects of using the potion
+        /// </summary>
+        /// <param name="potion">potion</param>
+        private void ProcessInjectorUse(Injector injector)
+        {
+            _player.Cohesion += injector.CohesionChange;
+            _player.Energy += injector.EnergyChange;
+            _player.RemoveGameItemFromInventory(_currentGameItem);
+        }
+
+        /// <summary>
+        /// process player dies with option to reset and play again
+        /// </summary>
+        /// <param name="message">message regarding player death</param>
+        private void OnPlayerDies(string message)
+        {
+            string messagetext = message +
+                "\n\nWould you like to play again?";
+
+            string titleText = "Death";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(messagetext, titleText, button);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    ResetPlayer();
+                    break;
+                case MessageBoxResult.No:
+                    QuitApplication();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// player chooses to exit game
+        /// </summary>
+        private void QuitApplication()
+        {
+            Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// player chooses to reset game
+        /// </summary>
+        private void ResetPlayer()
+        {
+            Environment.Exit(0);
+        }
+
 
         #region GAME TIMER METHODS
 
